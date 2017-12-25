@@ -5,18 +5,19 @@
 import React from "react";
 import { NavBar, Icon } from 'antd-mobile';
 
-const AppBar = () => {
+const AppBar = ({model,icon,onLeftClick,rightContent,title}) => {
+    console.log(rightContent)
     return(
         <div>
             <NavBar
                 mode="light"
                 icon={<Icon type="left" />}
-                onLeftClick={() => console.log('onLeftClick')}
-                rightContent={[
+                onLeftClick={() => window.history.back()}
+                rightContent = {rightContent?rightContent:[
                     <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
                     <Icon key="1" type="ellipsis" />,
                 ]}
-            >PNBook</NavBar>
+            >{title?title:"PNBook"}</NavBar>
         </div>
     )
 };

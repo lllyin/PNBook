@@ -14,7 +14,8 @@ import {
 import AppBar from "./compnents/Common/AppBar";
 import Overview from "./compnents/Overview/Overview";
 import ListView from "./compnents/ListView/ListView";
-import TabSwitch from "./compnents/TabSwitch/TabSwitch"
+import TabSwitch from "./compnents/TabSwitch/TabSwitch";
+import AddButton from "./compnents/Buttons/AddButton";
 
 import "normalize.css";
 import "./style/common.scss";
@@ -22,14 +23,21 @@ import "./style/common.scss";
 class HomePage extends React.Component{
     constructor(props){
         super(props);
-
     }
+
+    jumpToAddPage(){
+        this.props.history.push("./add");
+        console.log(1)
+    }
+
     render(){
+        console.log(this.props);
         return (
             <div>
                 <AppBar/>
                 <Overview/>
                 <ListView/>
+                <AddButton a={123123} onClick={this.jumpToAddPage.bind(this)}/>
             </div>
         )
     }
@@ -38,7 +46,10 @@ class HomePage extends React.Component{
 const AddPage = () => {
     return(
         <div>
-            add page
+            <AppBar
+                title={"add item"}
+                rightContent={[]}
+            />
             <TabSwitch/>
         </div>
     )
