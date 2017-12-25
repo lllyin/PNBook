@@ -13,8 +13,8 @@ function renderTabBar(props) {
 }
 
 const tabs = [
-    { title: 'First Tab' },
-    { title: 'Second Tab' }
+    { title: 'coast' },
+    { title: 'income' }
 ];
 
 class TabSwitch extends React.Component{
