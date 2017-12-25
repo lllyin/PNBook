@@ -40,7 +40,7 @@ class CategoryPicker extends React.Component {
             }
         });
         this.setState({selectedOptions:selectedOptions});
-        console.log("选择的是",selectedOptions);
+        // console.log("选择的是",selectedOptions);
     }
     handleClick(e){
         e.preventDefault(); // Fix event propagation on Android
@@ -68,7 +68,7 @@ class CategoryPicker extends React.Component {
     }
 
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         const { initData, show } = this.state;
         const menuEl = (
             <Menu
