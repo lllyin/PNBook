@@ -18,10 +18,12 @@
     "babel-plugin-import": "^1.6.3",
     "global": "^4.3.2",
     "normalize.css": "^7.0.0",
+    "rc-form": "^2.1.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-sticky": "^6.0.1",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   },
