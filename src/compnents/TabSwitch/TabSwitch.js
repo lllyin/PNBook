@@ -5,6 +5,7 @@ import React from "react";
 import { Tabs, WhiteSpace } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import H5NumberInputWrap from "../Input/NumberInput";
+import CategoryPicker from "../CategoryPicker/CategoryPicker";
 
 function renderTabBar(props) {
     return (<Sticky>
@@ -31,10 +32,12 @@ class TabSwitch extends React.Component{
                           initalPage={'t2'}
                           renderTabBar={renderTabBar}
                     >
-                        <div style={{ height: '250px', backgroundColor: '#fff' }}>
-                           <H5NumberInputWrap/>
+                        <div style={{ height: 'auto', backgroundColor: '#fff' }}>
+                            <CategoryPicker/>
+                            <H5NumberInputWrap/>
                         </div>
-                        <div style={{ height: '250px', backgroundColor: '#fff' }}>
+                        <div style={{ height: 'auto', backgroundColor: '#fff' }}>
+                            <CategoryPicker/>
                             <H5NumberInputWrap/>
                         </div>
                     </Tabs>
