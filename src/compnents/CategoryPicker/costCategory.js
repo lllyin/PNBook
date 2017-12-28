@@ -1,77 +1,75 @@
 const costCategory = [
     {
-        value: '1',
+        value: 'c01',
         label: '吃',
         children: [
             {
-                label: 'All Foods',
-                value: '1',
-                disabled: false,
-            },
-            {
                 label: '早餐',
-                value: '2',
+                value: 'c0101',
             }, {
                 label: '中餐',
-                value: '3',
+                value: 'c0102',
             }, {
                 label: '晚餐',
-                value: '4',
+                value: 'c0103',
             }, {
                 label: '零食',
-                value: '5',
+                value: 'c0104',
             }, {
                 label: '饮料',
-                value: '6',
+                value: 'c0105',
             }, {
                 label: '聚会/聚餐',
-                value: '7',
+                value: 'c0106',
             }, {
                 label: '水果',
-                value: '8',
+                value: 'c0107',
             }],
     }, {
-        value: '2',
+        value: 'c02',
         label: '住',
         children: [
             {
-                label: 'All Supermarkets',
-                value: '1',
-            }, {
                 label: '房租',
-                value: '2',
+                value: 'c0201',
                 disabled: false,
             }, {
-                label: 'C-Store',
-                value: '3',
+                label: '酒店',
+                value: 'c0202',
             }, {
-                label: 'Personal Care',
-                value: '4',
+                label: '其它',
+                value: 'c0203',
             }],
     },
     {
-        value: '3',
+        value: 'c03',
         label: '行',
         isLeaf: false,
         children: [
             {
-                label: '交通',
-                value: '1',
+                label: '公交车',
+                value: 'c0301',
+            }, {
+                label: '打的',
+                value: 'c0302',
+            }, {
+                label: '火车/汽车',
+                value: 'c0303',
             },
         ],
     },
     {
-        value: '4',
+        value: 'c04',
         label: '金融',
         isLeaf: false,
         children: [
             {
                 label: '股票',
-                value: '1',
+                value: 'c0401',
             },
             {
                 label: '基金',
-                value: '2',
+                value: 'c0402',
             },
         ],
     },

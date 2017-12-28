@@ -17,7 +17,7 @@ const AppBar = ({model,icon,onLeftClick,rightContent,title}) => {
                     <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
                     <Icon key="1" type="ellipsis" />,
                 ]}
-            >{title?title:"PNBook"}</NavBar>
+            >{title?title:"贫农记账本"}</NavBar>
         </div>
     )
 };

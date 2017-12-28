@@ -14,7 +14,8 @@ import {Provider} from 'react-redux';
 import thunk from "redux-thunk";
 import {createLogger} from "redux-logger";
 import {applyMiddleware} from "redux";
-import {balanceFinance} from "./redux/account.redux.js";
+import {balanceFinance} from "./redux/record.redux.js";
+import axios from 'axios';
 
 import AppBar from "./compnents/Common/AppBar";
 import Overview from "./compnents/Overview/Overview";
@@ -25,7 +26,10 @@ import AddButton from "./compnents/Buttons/AddButton";
 import "normalize.css";
 import "./style/common.scss";
 
-
+// axios.get('/api/test')
+//     .then(function (response) {
+//         console.log('ajax数据:',response.data);
+//     });
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -44,7 +48,7 @@ class HomePage extends React.Component {
                 <AppBar/>
                 <Overview/>
                 <ListView/>
-                <AddButton a={123123} onClick={this.jumpToAddPage.bind(this)}/>
+                <AddButton  onClick={this.jumpToAddPage.bind(this)}/>
             </div>
         )
     }
@@ -54,7 +58,7 @@ const AddPage = () => {
     return (
         <div>
             <AppBar
-                title={"add item"}
+                title={"记一笔"}
                 rightContent={[]}
             />
             <TabSwitch/>

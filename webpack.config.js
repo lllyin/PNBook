@@ -23,7 +23,17 @@ module.exports = {
     devServer: {
         contentBase: "./public",  //以public为根目录提供文件
         historyApiFallback: true,
-        inline: true
+        inline: true,
+        proxy: {
+            '/api/*': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+                secure: false,
+                pathRewrite:{
+                    '^/api':''
+                }
+            }
+        }
     },
     module: {
         rules: [{

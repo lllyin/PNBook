@@ -6,15 +6,15 @@ import React from "react";
 import { List, InputItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
-import {addCost} from "../../redux/account.redux";
+import {addCost,addIncome} from "../../redux/record.redux";
 
 class NumberInput extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             type:"money",
-            money:0
-        }
+            money:''
+        };
         this.saveRecord = this.saveRecord.bind(this);
     }
 
@@ -23,8 +23,13 @@ class NumberInput extends React.Component{
     }
 
     saveRecord(){
-        this.props.addCost(this.state.money);
-        console.log("数据保存了");
+        let catId = this.props.catId;
+        let account = this.props.account;
+        if(account === 'COST'){
+            this.props.addCost(this.state.money,catId);
+        } else if(account === 'INCOME'){
+            this.props.addIncome(this.state.money,catId);
+        }
     }
 
     render(){
@@ -45,7 +50,7 @@ class NumberInput extends React.Component{
                                 return v;
                             },
                         })}
-                        type={type}
+                        type='money'
                         placeholder="请输入金额"
                         ref={el => this.customFocusInst = el}
                         value={this.state.money}
@@ -65,6 +70,7 @@ const mapStateToProps = state => {
 };
 
 
+
 let H5NumberInputWrap = createForm()(NumberInput);
-H5NumberInputWrap = connect(mapStateToProps,{addCost:addCost})(H5NumberInputWrap);
+H5NumberInputWrap = connect(mapStateToProps,{addCost:addCost,addIncome:addIncome})(H5NumberInputWrap);
 export default H5NumberInputWrap;

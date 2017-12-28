@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"webpack-dev-server --inline"
+    "start": "webpack-dev-server --inline"
   },
   "keywords": [
     "react",
@@ -17,6 +17,7 @@
   "dependencies": {
     "antd-mobile": "^2.1.1",
     "babel-plugin-import": "^1.6.3",
+    "express": "^4.16.2",
     "global": "^4.3.2",
     "normalize.css": "^7.0.0",
     "rc-form": "^2.1.6",
@@ -29,6 +30,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "axios": "^0.17.1",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
