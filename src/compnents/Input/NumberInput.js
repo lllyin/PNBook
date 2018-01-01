@@ -8,6 +8,11 @@ import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
 import {addCost,addIncome,addCostRecord} from "../../redux/record.redux";
 
+
+@connect(
+    state=>({...state}),
+    {addIncome,addCostRecord,addCost}
+)
 class NumberInput extends React.Component{
     constructor(props){
         super(props);
@@ -26,7 +31,7 @@ class NumberInput extends React.Component{
         let catId = this.props.catId;
         let account = this.props.account;
         if(account === 'COST'){
-            this.props.addCost(this.state.money,catId);
+            this.props.addCostRecord(this.state.money,catId);
         } else if(account === 'INCOME'){
             this.props.addIncome(this.state.money,catId);
         }
@@ -64,13 +69,6 @@ class NumberInput extends React.Component{
     }
 }
 
-const mapStateToProps = state => {
-    // console.log("store state",state);
-    return {...state};
-};
-
-
 
 let H5NumberInputWrap = createForm()(NumberInput);
-H5NumberInputWrap = connect(mapStateToProps,{addCost:addCostRecord,addIncome:addIncome})(H5NumberInputWrap);
 export default H5NumberInputWrap;

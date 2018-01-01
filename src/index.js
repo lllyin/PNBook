@@ -25,9 +25,12 @@ import AddButton from "./compnents/Buttons/AddButton";
 import "normalize.css";
 import "./style/common.scss";
 
+const CURR_DATE = new Date();
+const CURRENT_DAY = CURR_DATE.getDate();
+const CURRENT_MONTH = CURR_DATE.getMonth() + 1;
 
 @connect(
-    state=>({...state}),
+    state=>({records:state}),
     {getAllRecord}
 )
 class HomePage extends React.Component {
@@ -41,25 +44,75 @@ class HomePage extends React.Component {
 
     componentDidMount(){
         this.props.getAllRecord();
-        // let initalRecord = [
-        //     {type: "COST", amount: "3", catId: "c0101", timestamp: 1514471421000},
-        //     {type: "COST", amount: "3", catId: "c0101", timestamp: 1514471424000},
-        //     {type: "COST", amount: "366", catId: "c0101", timestamp: 1514471429000},
-        //     {type: "INCOME", amount: "25", catId: "c0101", timestamp: 1514471435000}
-        // ];
-        // axios.post("/api/server/record",{type:"ADD",data:initalRecord})
-        //     .then(function (response) {
-        //         console.log("添加相应：",response);
-        //     })
     }
 
+    timeStampToDate(timeStamp) {
+        let date = new Date(timeStamp);
+        return {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate(),
+            week: date.getDay(),
+            H: date.getHours(),
+            M: date.getMinutes(),
+            S: date.getMilliseconds()
+        }
+    }
+
+    isCurrDay(date) {
+        return date.day === CURRENT_DAY;
+    };
+
+    isCurrWeek(date) {
+    }
+
+    currentWeekRange() {
+        let date = new Date();
+        let range = []; //当前周范围
+        let currDay = date.getDate();       //天
+        let currWeek = date.getDay();       //当前星期几
+        date.setMonth(date.getMonth() + 1, 0);
+        let days = date.getDate();
+        let range1 = currDay - currWeek + 1;
+        let range2 = currDay + (7 - currWeek);
+        range1 > 1 ? range[0] = range1 : range[0] = 1;
+        range2 <= days ? range[1] = range2 : range[1] = days;
+        console.log(range);
+        return range;
+    }
+
+    isCurrMonth(date) {
+        return date.month === CURRENT_MONTH;
+    };
+
+
     render() {
-        // console.log(this.props);
+        // console.log("-----",this.props);
+        let data = this.props.records;
+        console.log("记录列表数据", data);
+        let dayCost = 0;
+        let weekCost = 0;
+        let monthCost = 0;
+        var rangeWeek = this.currentWeekRange();
+        data.forEach((val) => {
+            let date = this.timeStampToDate(val.timestamp);
+            // console.log(parseFloat(val.amount));
+            if (this.isCurrDay(date)) {
+                dayCost += parseFloat(val.amount);
+            }
+            if(date.day>=rangeWeek[0] && date.day<=rangeWeek[1]){
+                weekCost += parseFloat(val.amount);
+            }
+            if (this.isCurrMonth(date)) {
+                monthCost += parseFloat(val.amount);
+            }
+        });
+        console.log('消费', dayCost, weekCost, monthCost);
         return (
             <div>
                 <AppBar/>
-                <Overview/>
-                <ListView/>
+                <Overview monthCost={monthCost}  />
+                <ListView dayCost={dayCost} weekCost={weekCost} monthCost={monthCost} />
                 <AddButton  onClick={this.jumpToAddPage.bind(this)}/>
             </div>
         )

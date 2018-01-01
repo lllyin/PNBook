@@ -75,19 +75,19 @@ module.exports = {
             minChunks: Infinity,
             // (模块必须被3个 入口chunk 共享)
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     output: {
-        //         comments: false,  // remove all comments
-        //     },
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
-        // new webpack.DefinePlugin({
-        //     "process.env": {
-        //         NODE_ENV: JSON.stringify("production")
-        //     }
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
         new HtmlWebpackPlugin({
             title:"PNBook",
             filename:"index.html",

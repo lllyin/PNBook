@@ -9,8 +9,16 @@ import {serverAddr} from "../config/config";
 import axios from "axios";
 
 //action
-export const addCost = (record) => {    //支出
+export const addRecord = (record) => {
     return record;
+};
+export const addCost = (money,catId) => {    //支出
+    return {
+        type: COST,
+        amount: money,
+        catId,
+        timestamp: Date.parse(new Date())
+    };
 };
 
 export const addIncome = (money, catId) => { //收入
@@ -21,7 +29,7 @@ export const addIncome = (money, catId) => { //收入
         timeStamp: Date.parse(new Date())
     }
 };
-export const userList = (payload) => {
+export const recordList = (payload) => {
     return {type: RECORDS_LIST, payload}
 };
 
@@ -30,7 +38,7 @@ export const getAllRecord = () => {
         // 异步
         axios.get(serverAddr + "/record")
             .then(function (response) {
-                dispatch(userList(response.data));
+                dispatch(recordList(response.data));
             })
     }
 };
@@ -47,8 +55,7 @@ export const addCostRecord = (money, catId) => {
         axios.post(serverAddr + "/record",{type:"ADD",data:[record]})
             .then(function (response) {
                 if(response.status === 200 && response.data.status === 1){
-                    console.log(response)
-                    dispatch(addCost(record));
+                    dispatch(addRecord(record));
                 }
             })
     }
@@ -75,7 +82,6 @@ export let balanceFinance = (state = initalRecord, action) => {
             ];
         case RECORDS_LIST:
             return [
-                ...state,
                 ...action.payload
             ];
         default:

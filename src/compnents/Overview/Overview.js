@@ -35,7 +35,7 @@ class Overview extends React.Component {
     }
 
     render() {
-        // console.log("data",formatDate(this.state.time));
+        console.log("当前选定日期",formatDate(this.state.time));
         return (
             <WingBlank>
                 <section className="overview-panel">
@@ -53,7 +53,7 @@ class Overview extends React.Component {
                     </DatePicker>
 
                     <div className="money-box">
-                        800
+                        {this.props.monthCost}
                     </div>
                 </section>
             </WingBlank>
