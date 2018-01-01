@@ -3,67 +3,88 @@
  */
 import React from "react";
 
-import { List } from 'antd-mobile';
+import {List} from 'antd-mobile';
 
 const Item = List.Item;
 const Brief = Item.Brief;
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+
 const CURR_DATE = new Date();
 const CURRENT_DAY = CURR_DATE.getDate();
-const CURRENT_MONTH= CURR_DATE.getMonth()+1;
+const CURRENT_MONTH = CURR_DATE.getMonth() + 1;
 
 @connect(
-    state=>({record:state})
+    state => ({record: state})
 )
-class ListView extends React.Component{
-    constructor(props){
+class ListView extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-
-        }
+        this.state = {}
     }
 
-    timeStampToDate(timeStamp){
+    timeStampToDate(timeStamp) {
         let date = new Date(timeStamp);
         return {
-            year:date.getFullYear(),
-            month:date.getMonth()+1,
-            day:date.getDate(),
-            week:date.getDay(),
-            H:date.getHours(),
-            M:date.getMinutes(),
-            S:date.getMilliseconds()
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate(),
+            week: date.getDay(),
+            H: date.getHours(),
+            M: date.getMinutes(),
+            S: date.getMilliseconds()
         }
     }
-    isCurrDay(date){
+
+    isCurrDay(date) {
         return date.day === CURRENT_DAY;
     };
-    isCurrWeek(date){
+
+    isCurrWeek(date) {
 
     }
-    isCurrMonth(date){
+
+    currentWeekRange() {
+        let date = new Date();
+        let range = []; //当前周范围
+        let currDay = date.getDate();       //天
+        let currWeek = date.getDay();       //当前星期几
+        date.setMonth(date.getMonth() + 1, 0);
+        let days = date.getDate();
+        let range1 = currDay - currWeek + 1;
+        let range2 = currDay + (7 - currWeek);
+        range1 > 1 ? range[0] = range1 : range[0] = 1;
+        range2 <= days ? range[1] = range2 : range[1] = days;
+        console.log(range);
+        return range;
+    }
+
+    isCurrMonth(date) {
         return date.month === CURRENT_MONTH;
     };
 
-    render(){
+    render() {
         let data = this.props.record;
-        console.log("记录列表数据",data);
+        console.log("记录列表数据", data);
         let dayCost = 0;
-        let weekCost=0;
-        let monthCost=0;
-        data.forEach((val)=>{
+        let weekCost = 0;
+        let monthCost = 0;
+        var rangeWeek = this.currentWeekRange();
+        data.forEach((val) => {
             let date = this.timeStampToDate(val.timestamp);
-            // console.log(date);
-            if(this.isCurrDay(date)){
+            console.log(date);
+            if (this.isCurrDay(date)) {
                 dayCost += parseFloat(val.amount);
             }
-            if(this.isCurrMonth(date)){
+            if(date.day>=rangeWeek[0] && date.day<=rangeWeek[1]){
+                weekCost += parseFloat(val.amount);
+            }
+            if (this.isCurrMonth(date)) {
                 monthCost += parseFloat(val.amount);
             }
         });
-        console.log('消费',dayCost,weekCost,monthCost)
-        return(
+        console.log('消费', dayCost, weekCost, monthCost)
+        return (
             <div>
                 {/* today */}
                 <List renderHeader={() => '日消费'} className="my-list">
