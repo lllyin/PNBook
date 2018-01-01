@@ -21,16 +21,16 @@ module.exports = {
         filename: 'js/bundle.js',
     },
     devServer: {
-        contentBase: "./public",  //以public为根目录提供文件
+        contentBase: "./build",  //以public为根目录提供文件
         historyApiFallback: true,
         inline: true,
         proxy: {
-            '/api/*': {
+            '/api/server/*': {
                 target: 'http://localhost:3000',
                 changeOrigin: true,
                 secure: false,
                 pathRewrite:{
-                    '^/api':''
+                    '^/api/server':''
                 }
             }
         }

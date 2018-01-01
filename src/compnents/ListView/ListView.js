@@ -9,7 +9,6 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 import { connect } from 'react-redux';
-
 const CURR_DATE = new Date();
 const CURRENT_DAY = CURR_DATE.getDate();
 const CURRENT_MONTH= CURR_DATE.getMonth()+1;
@@ -44,18 +43,18 @@ class ListView extends React.Component{
 
     }
     isCurrMonth(date){
-        console.log()
         return date.month === CURRENT_MONTH;
     };
 
     render(){
-        console.log("list",this.props);
         let data = this.props.record;
+        console.log("记录列表数据",data);
         let dayCost = 0;
         let weekCost=0;
         let monthCost=0;
-        data.forEach((val,key)=>{
-            let date = this.timeStampToDate(val.timeStamp);
+        data.forEach((val)=>{
+            let date = this.timeStampToDate(val.timestamp);
+            // console.log(date);
             if(this.isCurrDay(date)){
                 dayCost += parseFloat(val.amount);
             }

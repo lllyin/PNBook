@@ -6,7 +6,6 @@ import React from "react";
 import { NavBar, Icon } from 'antd-mobile';
 
 const AppBar = ({model,icon,onLeftClick,rightContent,title}) => {
-    console.log(rightContent)
     return(
         <div>
             <NavBar

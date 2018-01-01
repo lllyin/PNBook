@@ -13,7 +13,7 @@ const one_one = data[0].children[0].value;
 class CategoryPicker extends React.Component {
     constructor(...args) {
         super(...args);
-        console.log('-',...args);
+        // console.log('-',...args);
         this.state = {
             initData: '',
             show: false,
@@ -25,7 +25,7 @@ class CategoryPicker extends React.Component {
         this.onMaskClick = this.onMaskClick.bind(this);
     }
     onChange(value){
-        console.log('onChange:',value);
+        // console.log('onChange:',value);
         let label = '';
         let selectedOptions = [];       //选中数据集合
         let selectedOptionsName = [];       //选中数据显示名

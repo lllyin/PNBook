@@ -4,16 +4,13 @@
 * 2.收入
 * */
 
-import {COST, INCOME} from "../config/constants";
+import {COST, INCOME, RECORDS_LIST} from "../config/constants";
+import {serverAddr} from "../config/config";
+import axios from "axios";
 
 //action
-export const addCost = (money, catId) => {    //支出
-    return {
-        type: COST,
-        amount: money,
-        catId,
-        timeStamp: Date.parse(new Date())
-    }
+export const addCost = (record) => {    //支出
+    return record;
 };
 
 export const addIncome = (money, catId) => { //收入
@@ -24,7 +21,38 @@ export const addIncome = (money, catId) => { //收入
         timeStamp: Date.parse(new Date())
     }
 };
+export const userList = (payload) => {
+    return {type: RECORDS_LIST, payload}
+};
 
+export const getAllRecord = () => {
+    return dispatch => {
+        // 异步
+        axios.get(serverAddr + "/record")
+            .then(function (response) {
+                dispatch(userList(response.data));
+            })
+    }
+};
+
+export const addCostRecord = (money, catId) => {
+    return dispatch => {
+        let record = {
+                type: COST,
+                amount: money,
+                catId,
+                timestamp: Date.parse(new Date())
+        };
+        // 异步
+        axios.post(serverAddr + "/record",{type:"ADD",data:[record]})
+            .then(function (response) {
+                if(response.status === 200 && response.data.status === 1){
+                    console.log(response)
+                    dispatch(addCost(record));
+                }
+            })
+    }
+};
 
 //reducers
 // let initialState = {
@@ -32,13 +60,7 @@ export const addIncome = (money, catId) => { //收入
 //     incomeRecord: []
 // };
 
-let initalRecord = [
-    {type: "COST", amount: "3", catId: "c0101", timeStamp: 1514471421000},
-    {type: "COST", amount: "3", catId: "c0101", timeStamp: 1514471424000},
-    {type: "COST", amount: "366", catId: "c0101", timeStamp: 1514471429000},
-    {type: "INCOME", amount: "25", catId: "c0101", timeStamp: 1514471435000}
-    ];
-
+let initalRecord = [];
 export let balanceFinance = (state = initalRecord, action) => {
     switch (action.type) {
         case COST:
@@ -50,6 +72,11 @@ export let balanceFinance = (state = initalRecord, action) => {
             return [
                 ...state,
                 action
+            ];
+        case RECORDS_LIST:
+            return [
+                ...state,
+                ...action.payload
             ];
         default:
             return state;

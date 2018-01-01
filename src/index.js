@@ -10,13 +10,12 @@ import {
     Switch
 } from "react-router-dom";
 import {createStore} from 'redux';
-import {Provider} from 'react-redux';
+import {Provider,connect} from 'react-redux';
 import thunk from "redux-thunk";
 import {createLogger} from "redux-logger";
 import {applyMiddleware} from "redux";
-import {balanceFinance} from "./redux/record.redux.js";
-import axios from 'axios';
-
+import {balanceFinance,getAllRecord} from "./redux/record.redux.js";
+import axios from "axios";
 import AppBar from "./compnents/Common/AppBar";
 import Overview from "./compnents/Overview/Overview";
 import ListView from "./compnents/ListView/ListView";
@@ -26,11 +25,11 @@ import AddButton from "./compnents/Buttons/AddButton";
 import "normalize.css";
 import "./style/common.scss";
 
-// axios.get('/api/test')
-//     .then(function (response) {
-//         console.log('ajax数据:',response.data);
-//     });
 
+@connect(
+    state=>({...state}),
+    {getAllRecord}
+)
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
@@ -38,11 +37,24 @@ class HomePage extends React.Component {
 
     jumpToAddPage() {
         this.props.history.push("./add");
-        console.log(1)
+    }
+
+    componentDidMount(){
+        this.props.getAllRecord();
+        // let initalRecord = [
+        //     {type: "COST", amount: "3", catId: "c0101", timestamp: 1514471421000},
+        //     {type: "COST", amount: "3", catId: "c0101", timestamp: 1514471424000},
+        //     {type: "COST", amount: "366", catId: "c0101", timestamp: 1514471429000},
+        //     {type: "INCOME", amount: "25", catId: "c0101", timestamp: 1514471435000}
+        // ];
+        // axios.post("/api/server/record",{type:"ADD",data:initalRecord})
+        //     .then(function (response) {
+        //         console.log("添加相应：",response);
+        //     })
     }
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div>
                 <AppBar/>
@@ -96,3 +108,4 @@ ReactDOM.render(
     </Provider>,
     document.getElementById("root")
 );
+

@@ -35,7 +35,7 @@ class Overview extends React.Component {
     }
 
     render() {
-        console.log("data",formatDate(this.state.time));
+        // console.log("data",formatDate(this.state.time));
         return (
             <WingBlank>
                 <section className="overview-panel">

@@ -6,7 +6,7 @@ import React from "react";
 import { List, InputItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
-import {addCost,addIncome} from "../../redux/record.redux";
+import {addCost,addIncome,addCostRecord} from "../../redux/record.redux";
 
 class NumberInput extends React.Component{
     constructor(props){
@@ -72,5 +72,5 @@ const mapStateToProps = state => {
 
 
 let H5NumberInputWrap = createForm()(NumberInput);
-H5NumberInputWrap = connect(mapStateToProps,{addCost:addCost,addIncome:addIncome})(H5NumberInputWrap);
+H5NumberInputWrap = connect(mapStateToProps,{addCost:addCostRecord,addIncome:addIncome})(H5NumberInputWrap);
 export default H5NumberInputWrap;
