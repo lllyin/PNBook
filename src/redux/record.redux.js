@@ -4,7 +4,7 @@
 * 2.收入
 * */
 
-import {COST, INCOME, RECORDS_LIST} from "../config/constants";
+import {COST, INCOME, RECORDS_LIST, DAY_RECORDS, WEEK_RECORDS, MONTH_RECORDS} from "../config/constants";
 import {serverAddr} from "../config/config";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ import axios from "axios";
 export const addRecord = (record) => {
     return record;
 };
-export const addCost = (money,catId) => {    //支出
+export const addCost = (money, catId) => {    //支出
     return {
         type: COST,
         amount: money,
@@ -46,19 +46,29 @@ export const getAllRecord = () => {
 export const addCostRecord = (money, catId) => {
     return dispatch => {
         let record = {
-                type: COST,
-                amount: money,
-                catId,
-                timestamp: Date.parse(new Date())
+            type: COST,
+            amount: money,
+            catId,
+            timestamp: Date.parse(new Date())
         };
         // 异步
-        axios.post(serverAddr + "/record",{type:"ADD",data:[record]})
+        axios.post(serverAddr + "/record", {type: "ADD", data: [record]})
             .then(function (response) {
-                if(response.status === 200 && response.data.status === 1){
+                if (response.status === 200 && response.data.status === 1) {
                     dispatch(addRecord(record));
                 }
             })
     }
+};
+
+export const analyzeDayRecords = ({payload}) => {
+    return {type: DAY_RECORDS, payload}
+};
+export const analyzeWeekRecords = ({payload}) => {
+    return {type: WEEK_RECORDS, payload}
+};
+export const analyzeMonthRecords = ({payload}) => {
+    return {type: MONTH_RECORDS, payload}
 };
 
 //reducers
@@ -84,6 +94,34 @@ export let balanceFinance = (state = initalRecord, action) => {
             return [
                 ...action.payload
             ];
+        default:
+            return state;
+    }
+};
+
+//将所有数据整理成日，周，月数据
+let initRecords = {
+    dayRecords: [],
+    weekRecords: [],
+    monthRecords: []
+};
+export const analysisRecords = (state = initalRecord, action) => {
+    switch (action.type) {
+        case DAY_RECORDS:
+            return {
+                ...state,
+                dayRecords: [ ...action.payload]
+            };
+        case WEEK_RECORDS:
+            return {
+                ...state,
+                weekRecords: [ ...action.payload]
+            };
+        case MONTH_RECORDS:
+            return {
+                ...state,
+                monthRecords: [ ...action.payload]
+            };
         default:
             return state;
     }
