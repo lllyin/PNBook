@@ -42,10 +42,9 @@ class NumberInput extends React.Component{
         console.log("confirmBtn",confirmBtn);
         var _this= this;
         if(!confirmBtn){
-            location.reload();
+            window.location.reload();
         }
         confirmBtn.addEventListener("click",function (e) {
-            e.stopPropagation();
             if(_this.state.money){
                 console.log("i am click:",_this.props.catId,_this.props.account,_this.state.money);
                 _this.saveRecord();

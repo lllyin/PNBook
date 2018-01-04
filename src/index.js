@@ -150,7 +150,7 @@ let store = createStore(
 ReactDOM.render(
     <Provider store={store}>
         {/* <Router basename="/pnbook"> 上传到服务器可添加basename,作为路由的前缀 */}
-        <Router>
+        <Router basename="/pnbook">
             <div>
                 <Switch>
                     <Route path="/" exact component={HomePage}/>
