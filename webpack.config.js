@@ -76,21 +76,21 @@ module.exports = {
             minChunks: Infinity,
             // (模块必须被3个 入口chunk 共享)
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     output: {
-        //         comments: false,  // remove all comments
-        //     },
-        //     compress: {
-        //         warnings: true
-        //     }
-        // }),
-        new UglifyJSPlugin({
-            test: /\.js($|\?)/i,
-            sourceMap: true,
-            uglifyOptions: {
-                compress: true
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: true
             }
         }),
+        // new UglifyJSPlugin({
+        //     test: /\.js($|\?)/i,
+        //     sourceMap: true,
+        //     uglifyOptions: {
+        //         compress: true
+        //     }
+        // }),
         new webpack.DefinePlugin({
             "process.env": {
                 NODE_ENV: JSON.stringify("production")

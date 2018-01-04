@@ -7,11 +7,11 @@ import {List} from 'antd-mobile';
 
 const Item = List.Item;
 const Brief = Item.Brief;
-
+import { withRouter } from 'react-router'
 import {connect} from 'react-redux';
 
 
-
+@withRouter
 class ListView extends React.Component {
     constructor(props) {
         super(props);
@@ -30,9 +30,9 @@ class ListView extends React.Component {
                         extra={dayCost} align="top"
                         arrow="horizontal"
                         thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+                        onClick={()=>{this.props.history.push("detail/days")}}
                         multipleLine
-                    >Title
-                        <Brief>subtitle</Brief>
+                    >今天消费
                     </Item>
                 </List>
                 {/* week */}
@@ -42,9 +42,9 @@ class ListView extends React.Component {
                         align="top"
                         arrow="horizontal"
                         thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+                        onClick={()=>{this.props.history.push("detail/week")}}
                         multipleLine
-                    >Title
-                        <Brief>subtitle</Brief>
+                    >本周消费
                     </Item>
                 </List>
                 {/* month */}
@@ -54,9 +54,9 @@ class ListView extends React.Component {
                         align="top"
                         arrow="horizontal"
                         thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+                        onClick={()=>{this.props.history.push("detail/month")}}
                         multipleLine
-                    >Title
-                        <Brief>subtitle</Brief>
+                    >本月消费
                     </Item>
                 </List>
             </div>

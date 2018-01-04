@@ -9,18 +9,26 @@ import {
     Link,
     Switch
 } from "react-router-dom";
-import {createStore} from 'redux';
-import {Provider,connect} from 'react-redux';
+import {createStore,combineReducers} from 'redux';
+import {Provider, connect} from 'react-redux';
 import thunk from "redux-thunk";
 import {createLogger} from "redux-logger";
 import {applyMiddleware} from "redux";
-import {balanceFinance,getAllRecord} from "./redux/record.redux.js";
+import {
+    balanceFinance,
+    analysisRecords,
+    getAllRecord,
+    analyzeDayRecords,
+    analyzeWeekRecords,
+    analyzeMonthRecords
+} from "./redux/record.redux.js";
 import axios from "axios";
 import AppBar from "./compnents/Common/AppBar";
 import Overview from "./compnents/Overview/Overview";
 import ListView from "./compnents/ListView/ListView";
 import TabSwitch from "./compnents/TabSwitch/TabSwitch";
 import AddButton from "./compnents/Buttons/AddButton";
+import ListDetailPage from "./routes/ListDetailPage";
 
 import "normalize.css";
 import "./style/common.scss";
@@ -29,9 +37,10 @@ const CURR_DATE = new Date();
 const CURRENT_DAY = CURR_DATE.getDate();
 const CURRENT_MONTH = CURR_DATE.getMonth() + 1;
 
+//主页面
 @connect(
-    state=>({records:state}),
-    {getAllRecord}
+    state => ({records: state.allRecords}),
+    {getAllRecord,analyzeDayRecords, analyzeWeekRecords, analyzeMonthRecords}
 )
 class HomePage extends React.Component {
     constructor(props) {
@@ -42,7 +51,7 @@ class HomePage extends React.Component {
         this.props.history.push("/add");
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getAllRecord();
     }
 
@@ -89,7 +98,9 @@ class HomePage extends React.Component {
     render() {
         // console.log("-----",this.props);
         let data = this.props.records;
-        console.log("记录列表数据", data);
+        let dayRecords = [];    //日记录
+        let weekRecords = [];    //周记录
+        let monthRecords = [];    //月记录
         let dayCost = 0;
         let weekCost = 0;
         let monthCost = 0;
@@ -99,26 +110,32 @@ class HomePage extends React.Component {
             // console.log(parseFloat(val.amount));
             if (this.isCurrDay(date)) {
                 dayCost += parseFloat(val.amount);
+                dayRecords.push(val);
             }
-            if(date.day>=rangeWeek[0] && date.day<=rangeWeek[1]){
+            if (date.day >= rangeWeek[0] && date.day <= rangeWeek[1]) {
                 weekCost += parseFloat(val.amount);
+                weekRecords.push(val);
             }
             if (this.isCurrMonth(date)) {
                 monthCost += parseFloat(val.amount);
+                monthRecords.push(val);
             }
         });
-        console.log('消费', dayCost, weekCost, monthCost);
+        this.props.analyzeDayRecords({payload:dayRecords});
+        this.props.analyzeWeekRecords({payload:weekRecords});
+        this.props.analyzeMonthRecords({payload:monthRecords});
         return (
             <div>
                 <AppBar/>
-                <Overview monthCost={monthCost}  />
-                <ListView dayCost={dayCost} weekCost={weekCost} monthCost={monthCost} />
-                <AddButton  onClick={this.jumpToAddPage.bind(this)}/>
+                <Overview monthCost={monthCost}/>
+                <ListView dayCost={dayCost} weekCost={weekCost} monthCost={monthCost}/>
+                <AddButton onClick={this.jumpToAddPage.bind(this)}/>
             </div>
         )
     }
 }
 
+//添加记录页面
 const AddPage = () => {
     return (
         <div>
@@ -131,19 +148,23 @@ const AddPage = () => {
     )
 };
 
+//404页面
 const NotFound = () => (
     <div>
         <h1>not found</h1>
-        <Link to="/">to home</Link>
+        <Link to="/">返回首页</Link>
     </div>
 );
+
+
 
 const middleware = [thunk];
 if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger());
 }
+let reducers = combineReducers({allRecords:balanceFinance, countRecords:analysisRecords})
 let store = createStore(
-    balanceFinance,
+    reducers,
     applyMiddleware(...middleware)
 );
 
@@ -155,6 +176,12 @@ ReactDOM.render(
                 <Switch>
                     <Route path="/" exact component={HomePage}/>
                     <Route path="/add" component={AddPage}/>
+                    {/*<Route path={"/detail"} component={ListDetailPage}/>*/}
+                    <Route location={location}
+                           key={location.key}
+                           path={"/detail/:id"}
+                           component={ListDetailPage}
+                    />
                     <Route path="/" component={NotFound}/>
                 </Switch>
             </div>
