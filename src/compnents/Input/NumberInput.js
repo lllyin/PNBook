@@ -37,6 +37,22 @@ class NumberInput extends React.Component{
         }
     }
 
+    componentDidMount(){
+        var confirmBtn = document.querySelector(".keyboard-confirm");   //确定按钮
+        console.log("confirmBtn",confirmBtn);
+        var _this= this;
+        if(!confirmBtn){
+            location.reload();
+        }
+        confirmBtn.addEventListener("click",function (e) {
+            e.stopPropagation();
+            if(_this.state.money){
+                console.log("i am click:",_this.props.catId,_this.props.account,_this.state.money);
+                _this.saveRecord();
+            }
+        })
+    }
+
     render(){
         const { getFieldProps } = this.props.form;
         const { type } = this.state;
@@ -60,7 +76,6 @@ class NumberInput extends React.Component{
                         ref={el => this.customFocusInst = el}
                         value={this.state.money}
                         onChange={(v) => {this.handleChange(v)}}
-                        onBlur={this.saveRecord}
                         clear
                     >数字键盘</InputItem>
                 </List>
@@ -69,6 +84,5 @@ class NumberInput extends React.Component{
     }
 }
 
-
-let H5NumberInputWrap = createForm()(NumberInput);
+const H5NumberInputWrap = createForm()(NumberInput);
 export default H5NumberInputWrap;

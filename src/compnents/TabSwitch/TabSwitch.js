@@ -6,6 +6,8 @@ import {Tabs, WhiteSpace} from 'antd-mobile';
 import {StickyContainer, Sticky} from 'react-sticky';
 import H5NumberInputWrap from "../Input/NumberInput";
 import CategoryPicker from "../CategoryPicker/CategoryPicker";
+import {createForm} from "rc-form";
+
 
 function renderTabBar(props) {
     return (<Sticky>

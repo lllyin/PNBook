@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-const DB_URL = 'mongodb://localhost:27017/pnbook';
+const DB_URL = 'mongodb://66.112.216.3:27017/pnbook';
+
 //连接数据库
-mongoose.connect(DB_URL);
-mongoose.connection.on('connected', function () {
-    console.log('connected success');
+mongoose.connect(DB_URL,function (err,db) {
+    if(!err){
+        console.log('connected success');
+    }else{
+        console.log('connected fail');
+    }
 });
 
 let models = {

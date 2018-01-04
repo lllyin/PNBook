@@ -39,7 +39,7 @@ class HomePage extends React.Component {
     }
 
     jumpToAddPage() {
-        this.props.history.push("./add");
+        this.props.history.push("/add");
     }
 
     componentDidMount(){

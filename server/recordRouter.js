@@ -9,6 +9,14 @@ recordRouter.get("/", function (req, res) {
     })
 });
 
+recordModel.remove({amount:null},function (err,doc) {
+    if(!err){
+        console.log("删除空数据成果,",doc)
+    }else{
+        console.log(err);
+    }
+});
+
 //前端提交数据
 recordRouter.post("/", function (req, res) {
     let bodyData = req.body;
