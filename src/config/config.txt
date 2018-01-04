@@ -1,0 +1,8 @@
+location /api/server {
+    rewrite ^/api/server/(.*)$ /$1 break;
+    proxy_pass http://66.112.216.3:3000;
+}
+
+location /pnbook {
+    try_files $uri $uri/ /pnbook/index.html;
+}
