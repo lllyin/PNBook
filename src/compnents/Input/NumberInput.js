@@ -76,7 +76,7 @@ class NumberInput extends React.Component{
                         value={this.state.money}
                         onChange={(v) => {this.handleChange(v)}}
                         clear
-                    >数字键盘</InputItem>
+                    >金额</InputItem>
                 </List>
             </div>
         )

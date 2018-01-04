@@ -3,7 +3,7 @@
  */
 let total = 1;
 import React from "react";
-import { Menu, ActivityIndicator, NavBar } from 'antd-mobile';
+import { Menu, ActivityIndicator, NavBar,Icon } from 'antd-mobile';
 
 const data = require("./costCategory");
 //去除第一类目，第一项的value
@@ -103,7 +103,7 @@ class CategoryPicker extends React.Component {
                     <NavBar
                         leftContent={this.state.selectedOptionsName[0]?this.state.selectedOptionsName[0]:'待选择'}
                         mode="light"
-                        icon={<img src="https://gw.alipayobjects.com/zos/rmsportal/iXVHARNNlmdCGnwWxQPH.svg" className="am-icon am-icon-md" alt="" />}
+                        icon={ <Icon type="down" size='xs' /> }
                         onLeftClick={this.handleClick}
                         className="top-nav-bar"
                     >
