@@ -6,6 +6,7 @@ const webpack = require('webpack');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 // Create multiple instances
 const extractCSS = new ExtractTextPlugin('css/[name]-one.css');
 const extractLESS = new ExtractTextPlugin('css/[name]-two.css');
@@ -42,7 +43,7 @@ module.exports = {
             loader: 'babel-loader',
             // query: {
             //     presets: ['es2015', 'react'],
-                // plugins: ['transform-runtime',"transform-object-rest-spread"]
+            //     plugins: ["transform-decorators-legacy","transform-object-rest-spread"]
             // }
         }, {
             test: /\.css$/,
@@ -80,14 +81,21 @@ module.exports = {
         //         comments: false,  // remove all comments
         //     },
         //     compress: {
-        //         warnings: false
+        //         warnings: true
         //     }
         // }),
-        // new webpack.DefinePlugin({
-        //     "process.env": {
-        //         NODE_ENV: JSON.stringify("production")
-        //     }
-        // }),
+        new UglifyJSPlugin({
+            test: /\.js($|\?)/i,
+            sourceMap: true,
+            uglifyOptions: {
+                compress: true
+            }
+        }),
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
         new HtmlWebpackPlugin({
             title:"PNBook",
             filename:"index.html",
